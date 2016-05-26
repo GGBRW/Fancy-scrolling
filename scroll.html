@@ -1,0 +1,131 @@
+<style>
+    body {
+        background: lightgray;
+    }
+    #scrollList {
+        background: white;
+        box-shadow: 0 0 50px rgba(0,0,0,.5);
+        border: 1px solid black;
+        width: 400px;
+        height: 800px;
+        word-wrap: break-word;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        padding: 0px;
+        margin: 0 auto;
+        position: relative;
+
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    li {
+        font-family: Segoe UI;
+        padding: 100px;
+        margin-bottom: 10px;
+    }
+    #scrollList div:not(#letter) {
+        font-family: Segoe UI;
+        font-size: 30px;
+        background: #2f2f2f;
+        padding: 10px;
+        color: white;
+    }
+    #letter {
+        background: #2f2f2f;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        display: none;
+        font-family: Segoe UI;
+        font-size: 450px;
+        color: white;
+        text-align: center;
+    }
+</style>
+<ul id="scrollList">
+    <div id="letter">A</div>
+    <div>A</div>
+    <li>Apple</li>
+    <div>B</div>
+    <li>Blueberry</li>
+    <div>C</div>
+    <li>Coconut</li>
+    <div>D</div>
+    <li>Dragon Fruit</li>
+    <div>E</div>
+    <li>Elderberry</li>
+    <div>F</div>
+    <li>Fig</li>
+    <div>G</div>
+    <li>Grapefruit</li>
+    <div>H</div>
+    <li>Hog Plum</li>
+    <div>I</div>
+    <li>Ita Palm</li>
+    <div>J</div>
+    <li>Jujube</li>
+    <div>K</div>
+    <li>Kiwi</li>
+    <div>L</div>
+    <li>Lemon</li>
+    <div>M</div>
+    <li>Mango</li>
+    <div>N</div>
+    <li>Nectarine</li>
+    <div>O</div>
+    <li>Orange</li>
+    <div>P</div>
+    <li>Pineapple</li>
+    <div>Q</div>
+    <li>Quince</li>
+    <div>R</div>
+    <li>Raspberry</li>
+    <div>S</div>
+    <li>Strawberry</li>
+    <div>T</div>
+    <li>Tomato</li>
+    <div>U</div>
+    <li>Ugli</li>
+    <div>V</div>
+    <li>Victoria Plum</li>
+    <div>W</div>
+    <li>Watermelon</li>
+    <div>X</div>
+    <li>Ximenia</li>
+    <div>Y</div>
+    <li>Yucca</li>
+    <div>Z</div>
+    <li>Zinfandel Grapes</li>
+</ul>
+<script>
+    let v = 0;
+    let animation = false;
+    scrollList.onmousedown = function() { animation = false; }
+    scrollList.onmousemove = function(e) {
+        if(e.which == 1) {
+            scrollList.scrollTop -= e.movementY;
+            v = e.movementY;
+        }
+    };
+    scrollList.onmouseup = function() { animation = true; }
+    scrollList.onmouseleave = function(e) { animation = true; e.preventDefault(); return false; }
+
+    function animate() {
+        if(animation) {
+            if(v > 30 || v < -30) {
+                letter.style.display = "block";
+            } else if((v < 5 && v > 0) || (v > -5 && v < 0)) letter.style.display = "none";
+            scrollList.scrollTop -= v * 2;
+            v -= v / 20;
+            if(Math.round(v * 100000) == 0) { animation = false; }
+        }
+
+        letter.innerHTML = String.fromCharCode(65 + ((scrollList.scrollTop / 6766)) * 25);
+        letter.style.top = scrollList.scrollTop;
+        requestAnimationFrame(animate);
+    } animate();
+</script>
